@@ -29,7 +29,7 @@ const Book = function(props){
 
 Book.propTypes = {
     title: PropTypes.string.isRequired,
-    authors: PropTypes.string.isRequired,
+    authors: PropTypes.array,
     url: PropTypes.string
 };
 
