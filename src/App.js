@@ -13,11 +13,34 @@ class BooksApp extends React.Component {
   componentDidMount(){
     BooksAPI.getAll()
       .then((books) => {
-        console.log(books);
         this.setState({
           books
         })
       })
+  }
+
+  changeShelf = (id, value) => {
+    if(value !== "none"){
+      const params = {"id": id};
+      BooksAPI.update(params, value)
+        .then((updatedBookShelfInfo) => {
+          this.updateBookShelf(updatedBookShelfInfo);
+        })
+    }
+  }
+
+  updateBookShelf = (updatedBookShelfInfo) => {
+    this.setState((currentState) => ({
+      books : currentState.books.map((book) => {
+        if (updatedBookShelfInfo.currentlyReading.includes(book.id))
+          book.shelf = "currentlyReading";
+        else if (updatedBookShelfInfo.wantToRead.includes(book.id))
+          book.shelf = "wantToRead";
+        else if (updatedBookShelfInfo.read.includes(book.id))
+          book.shelf = "read";
+        return book;
+      })
+    }))
   }
 
   render() {
@@ -36,9 +59,9 @@ class BooksApp extends React.Component {
         <div className="list-books">
             <Header title="My Reads" />
             <div className="list-books-content">
-              <Bookshelf title="Currently Reading" books={currentlyReadingBooks} />
-              <Bookshelf title="Want to Read" books={wantToReadBooks} />
-              <Bookshelf title="Read" books={readBook} />
+              <Bookshelf title="Currently Reading" books={currentlyReadingBooks} changeShelf={this.changeShelf}/>
+              <Bookshelf title="Want to Read" books={wantToReadBooks} changeShelf={this.changeShelf}/>
+              <Bookshelf title="Read" books={readBook} changeShelf={this.changeShelf}/>
             </div>
             <div className="open-search">
               <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>

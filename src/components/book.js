@@ -12,7 +12,7 @@ const Book = function(props){
                         backgroundImage: `url(${props.url})`
                     }} />
                 <div className="book-shelf-changer">
-                    <select>
+                    <select value={props.shelf} onChange={(event) => props.changeShelf(event.target.value)}>
                         <option value="move" disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>
@@ -30,7 +30,9 @@ const Book = function(props){
 Book.propTypes = {
     title: PropTypes.string.isRequired,
     authors: PropTypes.array,
-    url: PropTypes.string
+    url: PropTypes.string,
+    shelf: PropTypes.string,
+    changeShelf: PropTypes.func
 };
 
 export default Book;
