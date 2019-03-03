@@ -13,7 +13,7 @@ const Bookshelf = function(props){
                     <Book 
                         title={book.title} 
                         authors={book.authors}
-                        url={book.imageLinks.thumbnail}
+                        url={book.imageLinks && book.imageLinks.thumbnail}
                         shelf={book.shelf}
                         changeShelf={(value) => props.changeShelf(book.id, value)}
                     />
