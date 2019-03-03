@@ -21,10 +21,21 @@ class BooksApp extends React.Component {
       })
   }
 
+  resetSearchBooks = () => {
+    this.setState({
+      searchBooks: []
+    })
+  }
+
   addToShelf = (book, value) => {
-    if(book.shelf === undefined){
+    if(book.shelf === undefined || book.shelf === "none"){
       book.shelf = value;
-      this.setState((currentState) => ({
+      let isBookAlreadyAdded = false;
+      this.state.books.forEach(currentBook => {
+        if(currentBook.id === book.id)
+          isBookAlreadyAdded = true;
+      })
+      !isBookAlreadyAdded && this.setState((currentState) => ({
         books: currentState.books.concat(book)
       }))
     }
@@ -101,6 +112,9 @@ class BooksApp extends React.Component {
       else if(book.shelf === "read")
         readBook.push(book);
     });
+    // console.log(currentlyReadingBooks);
+    // console.log(wantToReadBooks);
+    // console.log(readBook);
     
     return (
       <div className="app">
@@ -125,6 +139,7 @@ class BooksApp extends React.Component {
             books={this.state.searchBooks}
             getBooksBasedOnSearch={this.getBooksBasedOnSearch}
             addToShelf={this.addToShelf}
+            resetSearchBooks={this.resetSearchBooks}
           />
         )}/>
       </div>

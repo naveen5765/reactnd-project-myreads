@@ -14,7 +14,7 @@ class SearchBooks extends Component {
             <div className="search-books">
                 <div className="search-books-bar">
                     <Link to="/" className="close-create-contact">
-                        <button className="close-search">Close</button>
+                        <button className="close-search" onClick={this.props.resetSearchBooks}>Close</button>
                     </Link>
                     <div className="search-books-input-wrapper">
                     {/*
@@ -67,7 +67,8 @@ class SearchBooks extends Component {
 
 
 SearchBooks.propTypes = {
-    addToShelf: PropTypes.func
+    addToShelf: PropTypes.func,
+    resetSearchBooks: PropTypes.func
 };
 
 export default SearchBooks;
